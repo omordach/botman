@@ -2,17 +2,22 @@
 use App\Http\Controllers\BotManController;
 use BotMan\Drivers\Telegram\Extensions\Keyboard;
 use BotMan\Drivers\Telegram\Extensions\KeyboardButton;
+use BotMan\BotMan\Messages\Outgoing\Actions\Button;
+use BotMan\BotMan\Messages\Conversations\Conversation;
+use BotMan\BotMan\Messages\Attachments\Image;
+use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
+
 
 
 $botman = resolve('botman');
 
 $botman->hears('/start', function ($bot){ 
 	$bot->reply('Вітаю! Я  бот психолога та психотерпевта Наталії Раїник. Тут ви зможете отримати відповіді на найпопулярніші запитання щодо консультацій та терапії.');
-	$keyboard = Keyboard::create()->addRow(
-		KeyboardButton::create('Консультація')->callbackData('Консультація'),
-		KeyboardButton::create('Психотерпія')->callbackData('Психотерпія'),
-		KeyboardButton::create('Про мене')->callbackData('Про мене'),
-		KeyboardButton::create('Контакти')->callbackData('Контакти')
+	$keyboard = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Консультація')->callbackData('Консультація'))
+	->addRow(KeyboardButton::create('Психотерпія')->callbackData('Психотерпія'))
+	->addRow(KeyboardButton::create('Про мене')->callbackData('Про мене'))
+	->addRow(KeyboardButton::create('Контакти')->callbackData('Контакти')
 	);
 	$bot->reply('Оберіть розділ', $keyboard->toArray()); 
 });
@@ -32,7 +37,11 @@ $botman->hears('Консультація', function($bot){
 Можлива консультація по скайпу.
 
 Усі консультації конфіденційні.');
-	$bot->reply('Для запису на консультацію пишіть у дірект @NataliaRainyk');
+	$home = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Home')->callbackData('Home')
+	);
+	$bot->reply('Повернутися на головну', $home->toArray()); 
+
 });
 
 $botman->hears('Психотерпія', function($bot){
@@ -45,7 +54,10 @@ $botman->hears('Психотерпія', function($bot){
 Як пише американський психотерапевт Гленн Габбард, результатом психотерапії повинно бути відчуття, що людина живе у своій «власній шкірі» і є справжньою. 
 
 Надаю психологічну допомогу в індивідуальній формі, також працюю із парами, веду групову психотерапію. ');
-	$bot->reply('Для запису на психотерапію пишіть у дірект @NataliaRainyk');
+		$home = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Home')->callbackData('Home')
+	);
+	$bot->reply('Повернутися на головну', $home->toArray()); 
 });
 
 
@@ -53,7 +65,10 @@ $botman->hears('Про мене', function($bot){
 	$bot->reply('Базову освіту психолога отримала в Українському Католицькому Університеті - магістр, клінічний психолог.
 Психотерапевтичну практику почала у 2017 році. Практикую приватно, також маю досвід роботи у Психоневрологічному диспансері Львова, стаціонар №1.
 Регулярно проходжу супервізії. Використовую методи гештальт терапії, психоаналітично орієнтованої терапії та когнітивно-поведінкової терапії.');
-	$bot->reply('Для детільнішої інформації пишіть у дірект @NataliaRainyk');
+		$home = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Home')->callbackData('Home')
+	);
+	$bot->reply('Повернутися на головну', $home->toArray()); 
 });
 
 $botman->hears('Контакти', function($bot){
@@ -61,10 +76,21 @@ $botman->hears('Контакти', function($bot){
 	$bot->reply('Телефон: +380(97)86-86-420');
 	$bot->reply('Моя сторінка на facebook: https://www.facebook.com/RainykPsyHelp/');
 	$bot->reply('Блог: https://blog.nataliarainyk.com/');
-	$bot->reply('Для запису на консультацію пишіть у дірект @NataliaRainyk');
+		$home = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Home')->callbackData('Home')
+	);
+	$bot->reply('Повернутися на головну', $home->toArray()); 
 });
 
-
+$botman->hears('Home', function($bot){
+	$keyboard = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
+	->addRow(KeyboardButton::create('Консультація')->callbackData('Консультація'))
+	->addRow(KeyboardButton::create('Психотерпія')->callbackData('Психотерпія'))
+	->addRow(KeyboardButton::create('Про мене')->callbackData('Про мене'))
+	->addRow(KeyboardButton::create('Контакти')->callbackData('Контакти')
+	);
+	$bot->reply('Оберіть розділ', $keyboard->toArray()); 
+});
 
 
 

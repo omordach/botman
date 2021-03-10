@@ -12,10 +12,10 @@ use BotMan\BotMan\Messages\Outgoing\OutgoingMessage;
 $botman = resolve('botman');
 
 $botman->hears('/start', function ($bot){ 
-	$bot->reply('Вітаю! Я  бот психолога та психотерпевта Наталії Раїник. Тут ви зможете отримати відповіді на найпопулярніші запитання щодо консультацій та терапії.');
+	$bot->reply('Вітаю! Я  бот психолога та психотерапевта Наталії Раїник. Тут ви зможете отримати відповіді на найпопулярніші запитання щодо консультацій та терапії.');
 	$keyboard = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
 	->addRow(KeyboardButton::create('Консультація')->callbackData('Консультація'))
-	->addRow(KeyboardButton::create('Психотерпія')->callbackData('Психотерпія'))
+	->addRow(KeyboardButton::create('Психотерапія')->callbackData('Психотерапія'))
 	->addRow(KeyboardButton::create('Про мене')->callbackData('Про мене'))
 	->addRow(KeyboardButton::create('Контакти')->callbackData('Контакти')
 	);
@@ -44,7 +44,7 @@ $botman->hears('Консультація', function($bot){
 
 });
 
-$botman->hears('Психотерпія', function($bot){
+$botman->hears('Психотерапія', function($bot){
 	$bot->reply('Психотерапія - процес, в якому клієнт за допомогою психотерапевта працює над розвінчуванням патологічних переконань, які перешкоджають повноцінному життю, справляють негативний вплив на самооцінку, не дають досягти бажаних цілей та завдають страждання.
 
 Психотерапія потрібна тоді, коли вас турбує більш чи менш виражене відчуття душевного дискомфорту.
@@ -85,7 +85,7 @@ $botman->hears('Контакти', function($bot){
 $botman->hears('Home', function($bot){
 	$keyboard = Keyboard::create(Keyboard::TYPE_INLINE)->oneTimeKeyboard(false)
 	->addRow(KeyboardButton::create('Консультація')->callbackData('Консультація'))
-	->addRow(KeyboardButton::create('Психотерпія')->callbackData('Психотерпія'))
+	->addRow(KeyboardButton::create('Психотерапія')->callbackData('Психотерапія'))
 	->addRow(KeyboardButton::create('Про мене')->callbackData('Про мене'))
 	->addRow(KeyboardButton::create('Контакти')->callbackData('Контакти')
 	);
